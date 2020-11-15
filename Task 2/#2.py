@@ -3,17 +3,17 @@
 
 from math import sin, cos, pi
 
-
-def f1(x):
-    return 2 * x ** 2
-
-
-def f2(x):
-    return 8 + 2 * x - x ** 2
+func = [lambda x: 2 * x ** 2,
+        lambda x: 8 + 2 * x - x ** 2,
+        lambda x: sin(x) / (cos(x) ** 2 + 1)]
 
 
-def f3(x):
-    return sin(x) / (cos(x) ** 2 + 1)
+def select_function_number():
+    print("Список доступных функций:\n 1.2 * x ^ 2 \n 2.8 + 2 * x - x ^ 2 \n 3.sin(x) / (cos(x) ^ 2 + 1)")
+    number = int(input("Выберите номер функции: "))
+    while number not in [1, 2, 3]:
+        number = int(input("Номер функции некорректный, попробуйте снова: "))
+    return number - 1
 
 
 def runge_rule(o, s1, s2, eps):
@@ -61,29 +61,32 @@ def parabola_method(a, b, n, f, eps):
     return h / 3 * (f(a) + s1 + s2 + f(b))
 
 
-a = float(input('a = '))
-b = float(input('b = '))
-n1 = int(input('n = '))
-eps = float(input('eps = '))
+print("|-||-||-||-||-||-||-||-||-||-||-||-||-||-||-|")
+a = float(input('Введите левую границу a = '))
+b = float(input('Введите правую границу b = '))
+n1 = int(input('Введите количество разбиений = '))
+eps = float(input('Введите точность eps = '))
+print("|-||-||-||-||-||-||-||-||-||-||-||-||-||-||-|")
+number = select_function_number()
 
 n2 = n1
-s1 = trapezium_method(a, b, n2, f2, eps)
+s1 = trapezium_method(a, b, n2, func[number], eps)
 n2 *= 2
-s2 = trapezium_method(a, b, n2, f2, eps)
+s2 = trapezium_method(a, b, n2, func[number], eps)
 while not (runge_rule(1 / 3, s1, s2, eps)):
     s1 = s2
     n2 *= 2
-    s2 = trapezium_method(a, b, n2, f2, eps)
+    s2 = trapezium_method(a, b, n2, func[number], eps)
 h = (b - a) / n2
-print(s2, h, n2)
+print("Метод трапеций: \n","Итоговое значение: ", s2, "\n", "Длина разбиения:", h, "\n", "Количество разбиений:  ", n2, "\n")
 
 n2 = n1
-s1 = parabola_method(a, b, n2, f2, eps)
+s1 = parabola_method(a, b, n2, func[number], eps)
 n2 *= 2
-s2 = parabola_method(a, b, n2, f2, eps)
+s2 = parabola_method(a, b, n2, func[number], eps)
 while not (runge_rule(1 / 15, s1, s2, eps)):
     s1 = s2
     n2 *= 2
-    s2 = parabola_method(a, b, n2, f2, eps)
+    s2 = parabola_method(a, b, n2, func[number], eps)
 h = (b - a) / n2
-print(s2, h, n2)
+print("Метод Симпсона: \n", "Итоговое значение: ", s2, "\n", "Длина разбиения:", h, "\n", "Количество разбиений:  ", n2, "\n")
