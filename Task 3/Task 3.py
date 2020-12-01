@@ -3,6 +3,7 @@
 
 from copy import deepcopy
 
+
 def is_symmetrical(n, a):
     for i in range(n):
         for j in range(i + 1, n):
@@ -10,7 +11,8 @@ def is_symmetrical(n, a):
                 return False
     return True
 
-def det(n, a):
+
+def det(n, a):  # подсчёт определителя с помощью разложения по первой строке и j-столбцу
     if n == 1:
         return a[0][0]
     s = 0
@@ -21,6 +23,7 @@ def det(n, a):
             del m[i][j]
         s += (-1) ** j * a[0][j] * det(n - 1, m)
     return s
+
 
 def sylvester_test(n, a):
     for i in range(1, n + 1):
@@ -34,6 +37,7 @@ def sylvester_test(n, a):
             return False
     return True
 
+
 def cholesky_method(n, a, f):
     # вычисление элементов матрицы L
     l = deepcopy(a)
@@ -44,7 +48,7 @@ def cholesky_method(n, a, f):
         s = 0
         for p in range(0, i):
             s += l[i][p] ** 2
-        l[i][i] = (a[i][i] - s) ** 0.5       
+        l[i][i] = (a[i][i] - s) ** 0.5
         for j in range(i + 1, n):
             s = 0
             for p in range(0, i):
@@ -65,13 +69,15 @@ def cholesky_method(n, a, f):
             s += l[j][i] * x[j]
         x[i] = (y[i] - s) / l[i][i]
     return x
-    
-def mult(n, a, b):
+
+
+def mult(n, a, b):  # матрица(nxn) * вектор(n)
     c = [0] * n
     for i in range(n):
         for j in range(n):
             c[i] += a[i][j] * b[j]
     return c
+
 
 f = open('input.txt', 'r')
 line = f.readline()
@@ -96,9 +102,9 @@ if b1 and b2:
     for i in range(n - 1):
         f.write(str(f2[i] - f1[i]) + ' ')
     f.write(str(f2[n - 1] - f1[n - 1]) + '\n')
-elif b1 and not(b2):
+elif b1 and not (b2):
     f.write('Матрица не является положительно-определённой')
-elif not(b1) and b2:
+elif not (b1) and b2:
     f.write('Матрица не является симметричной')
 else:
     f.write('Матрица не является симметричной и положительно-определённой')
