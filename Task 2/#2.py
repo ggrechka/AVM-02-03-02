@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from math import sin, cos, pi
+from math import sin, exp,cos, pi
 
-func = [lambda x: 2 * x ** 2,
-        lambda x: 8 + 2 * x - x ** 2,
-        lambda x: sin(x) / (cos(x) ** 2 + 1)]
+func = [lambda x: exp(x)+sin(x),
+        lambda x: x*x*x+3*sin(x),
+        lambda x: x*x+4*x+sin(5*x)]
 
 
 def select_function_number():
-    print("Список доступных функций:\n 1.2 * x ^ 2 \n 2.8 + 2 * x - x ^ 2 \n 3.sin(x) / (cos(x) ^ 2 + 1)")
+    print("Список доступных функций:\n 1.exp(x)+sin(x) \n 2.x*x*x+3*sin(x) \n 3.x*x+4*x+sin(5*x)")
     number = int(input("Выберите номер функции: "))
     while number not in [1, 2, 3]:
         number = int(input("Номер функции некорректный, попробуйте снова: "))
